@@ -1,0 +1,31 @@
+.file-upload {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.upload-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-controls input[type="file"] {
+  font-size: 14px;
+}
+
+.upload-button {
+  background: var(--primary);
+  color: white;
+}
+
+.upload-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.upload-error {
+  color: var(--error);
+  font-size: 14px;
+  margin-top: 8px;
+}

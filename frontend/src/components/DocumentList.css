@@ -1,0 +1,61 @@
+.document-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.document-list ul {
+  list-style: none;
+}
+
+.document-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.document-item:hover {
+  background: var(--bg);
+}
+
+.document-item.selected {
+  background: var(--bg);
+  outline: 2px solid var(--primary);
+}
+
+.document-name {
+  font-size: 14px;
+  color: var(--text-h);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.document-status {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-ready {
+  color: var(--success);
+}
+
+.status-processing {
+  color: var(--warning);
+}
+
+.status-failed {
+  color: var(--error);
+}
+
+.empty-message {
+  font-size: 14px;
+  color: var(--text);
+}

@@ -1,0 +1,7 @@
+package com.documentsummary.repository;
+
+import com.documentsummary.model.Document;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DocumentRepository extends JpaRepository<Document, Long> {
+}
