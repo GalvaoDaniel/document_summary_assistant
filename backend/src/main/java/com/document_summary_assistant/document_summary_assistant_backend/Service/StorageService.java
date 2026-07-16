@@ -1,5 +1,6 @@
 package com.document_summary_assistant.document_summary_assistant_backend.Service;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,5 +17,9 @@ public class StorageService {
 
     public String upload(MultipartFile file) throws IOException {
         return storageStrategy.upload(file);
+    }
+
+    public Resource serveFile(String filename) {
+        return storageStrategy.serveFile(filename);
     }
 }

@@ -3,10 +3,15 @@ package com.document_summary_assistant.document_summary_assistant_backend.Servic
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
@@ -46,5 +51,21 @@ public class AwsS3Strategy implements StorageStrategy {
                 RequestBody.fromBytes(file.getBytes())
         );
         return key;
+    }
+
+    private ResponseInputStream<GetObjectResponse> download(String key) {
+        return s3Client.getObject(
+                GetObjectRequest.builder()
+                        .bucket(bucket)
+                        .key(key)
+                        .build()
+        );
+    }
+
+    @Override
+    public Resource serveFile(String fileName) {
+        ResponseInputStream<GetObjectResponse> s3Object = download(fileName);
+
+        return new InputStreamResource(s3Object);
     }
 }
