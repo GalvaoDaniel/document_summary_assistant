@@ -1,5 +1,6 @@
 package com.document_summary_assistant.document_summary_assistant_backend.Service;
 
+import com.document_summary_assistant.document_summary_assistant_backend.Configuration.AppProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -17,23 +18,27 @@ import java.nio.file.Paths;
 @Service
 public class FileSystemStrategy implements StorageStrategy {
 
-    private static final String UPLOADDIR = "uploads/";
+    private final AppProperties props;
+
+    public FileSystemStrategy(AppProperties props) {
+        this.props = props;
+    }
 
     @Override
     public String upload(MultipartFile file) throws IOException {
-        File directory = new File(UPLOADDIR);
+        File directory = new File(props.uploadDir());
         if (!directory.exists()) {
             directory.mkdir();
         }
 
-        Path path = Paths.get(UPLOADDIR + file.getOriginalFilename());
+        Path path = Paths.get(props.uploadDir() + file.getOriginalFilename());
         Files.write(path, file.getBytes());
         return "File saved at: " + path.toAbsolutePath();
     }
 
     @Override
     public Resource serveFile(String filename) {
-        Path filePath = Paths.get(UPLOADDIR).resolve(filename);
+        Path filePath = Paths.get(props.uploadDir()).resolve(filename);
         Resource resource;
         try {
             resource = new UrlResource(filePath.toUri());
